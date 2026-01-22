@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEKTON | Arquitectura Digital</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --bg-color: #F0F0F0; /* Gris Concreto Claro */
+            --text-color: #111111; /* Negro Carbón */
+            --accent-color: #222222;
+            --grid-line: #DCDCDC;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --border-style: 1px solid #111111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Patrón de cuadrícula tipo plano arquitectónico */
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- UTILIDADES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .border-top { border-top: var(--border-style); }
+        .border-bottom { border-bottom: var(--border-style); }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border: var(--border-style);
+            font-family: var(--font-head);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            background: rgba(240, 240, 240, 0.9);
+            backdrop-filter: blur(5px);
+            border-bottom: var(--border-style);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-family: var(--font-head);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-head);
+            font-size: clamp(3rem, 8vw, 6rem); /* Responsive typography */
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* --- MANIFIESTO (COMPARATIVA) --- */
+        .manifiesto {
+            padding: 100px 0;
+            border-top: var(--border-style);
+            background: var(--bg-color);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: var(--border-style);
+        }
+
+        .comp-col {
+            padding: 40px;
+        }
+
+        .comp-col.left {
+            border-right: var(--border-style);
+            background-color: #e0e0e0;
+            color: #555;
+        }
+
+        .comp-col h3 {
+            font-family: var(--font-head);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .comp-col ul li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .comp-col.left ul li::before { content: "✕"; position: absolute; left: 0; color: red; }
+        .comp-col.right ul li::before { content: "✓"; position: absolute; left: 0; color: var(--text-color); font-weight: bold;}
+
+        /* --- SERVICIOS (NIVELES) --- */
+        .servicios {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-family: var(--font-head);
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .level-card {
+            border: var(--border-style);
+            padding: 30px;
+            background: var(--bg-color);
+            transition: transform 0.3s ease;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0px var(--text-color);
+        }
+
+        .level-number {
+            font-family: var(--font-head);
+            font-size: 4rem;
+            opacity: 0.2;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .level-card h4 {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .level-card p {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            border: 1px solid #999;
+            padding: 3px 8px;
+            font-family: var(--font-head);
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACTO --- */
+        .contacto {
+            padding: 100px 0;
+            background: var(--text-color);
+            color: var(--bg-color);
+            text-align: center;
+        }
+
+        .contacto h2 {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .contacto .btn {
+            border-color: var(--bg-color);
+            color: var(--bg-color);
+            margin-top: 20px;
+        }
+
+        .contacto .btn:hover {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 30px 0;
+            border-top: var(--border-style);
+            text-align: center;
+            font-size: 0.8rem;
+            font-family: var(--font-head);
+            text-transform: uppercase;
+        }
+
+        /* --- ANIMACIONES SENCILLAS --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Simplificado para el ejemplo */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Tekton.</div>
+                <div class="nav-links">
+                    <a href="#manifiesto">Realidad</a>
+                    <a href="#servicios">Arquitectura</a>
+                    <a href="#contacto">Construir</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>No construyas<br>tu imperio en<br>terreno rentado.</h1>
+                <p>Las redes sociales no son tu negocio. Son el volante que repartes en la calle. Tekton diseña y escritura tu verdadero espacio digital.</p>
+                <a href="#contacto" class="btn">Reclamar mi terreno</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="manifiesto" class="manifiesto fade-in">
+        <div class="container">
+            <h2 style="font-family: var(--font-head); margin-bottom: 30px; text-transform: uppercase;">El Diagnóstico</h2>
+            <div class="comparison-grid">
+                <div class="comp-col left">
+                    <h3>El Inquilino Digital</h3>
+                    <p style="margin-bottom: 20px; font-style: italic;">(Lo que probablemente eres hoy)</p>
+                    <ul>
+                        <li>Dependes del algoritmo de Zuckerberg.</li>
+                        <li>Si te bloquean la cuenta, pierdes todo.</li>
+                        <li>Gestión manual (hojas de papel, WhatsApp).</li>
+                        <li>Tu cliente no es tuyo, es de la red social.</li>
+                    </ul>
+                </div>
+                <div class="comp-col right">
+                    <h3>El Propietario Tekton</h3>
+                    <p style="margin-bottom: 20px; font-style: italic;">(En lo que te convertiremos)</p>
+                    <ul>
+                        <li>Soberanía total de tus datos.</li>
+                        <li>Automatización que trabaja mientras duermes.</li>
+                        <li>Activos digitales reales (Web, Apps, Contratos).</li>
+                        <li>Sistemas a la medida, no plantillas baratas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicios" class="servicios">
+        <div class="container">
+            <h2 class="section-title fade-in">Niveles de Construcción</h2>
+            
+            <div class="levels-grid">
+                <div class="level-card fade-in">
+                    <div class="level-number">01</div>
+                    <h4>Cimientos & Fachada</h4>
+                    <p>Ideal para profesionales y negocios locales. Dejamos de lado las excusas y te damos una dirección digital propia.</p>
+                    <div class="tech-tags">
+                        <span class="tag">Landing Page</span>
+                        <span class="tag">Portafolio</span>
+                        <span class="tag">Branding</span>
+                    </div>
+                </div>
+
+                <div class="level-card fade-in">
+                    <div class="level-number">02</div>
+                    <h4>Estructura & Maquinaria</h4>
+                    <p>Para negocios que facturan. Automatizamos procesos, ventas y reservas. El sistema trabaja, tú cobras.</p>
+                    <div class="tech-tags">
+                        <span class="tag">E-Commerce</span>
+                        <span class="tag">Reservas</span>
+                        <span class="tag">Automatización</span>
+                    </div>
+                </div>
+
+                <div class="level-card fade-in">
+                    <div class="level-number">03</div>
+                    <h4>Rascacielos & Futuro</h4>
+                    <p>Arquitectura digital de élite. Inteligencia Artificial, Blockchain y ecosistemas tokenizados. Sin límites.</p>
+                    <div class="tech-tags">
+                        <span class="tag">Web3</span>
+                        <span class="tag">AI Agents</span>
+                        <span class="tag">Blockchain</span>
+                        <span class="tag">Tokenización</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contacto">
+        <div class="container fade-in">
+            <h2>El límite es tu mente.<br>Nosotros ponemos el código.</h2>
+            <p style="max-width: 600px; margin: 0 auto 30px auto; font-weight: 300;">
+                Deja de jugar a la casita en redes sociales. Comencemos a construir tu edificio hoy mismo.
+            </p>
+            <a href="mailto:hola@tekton.com" class="btn">Iniciar Proyecto</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 TEKTON DIGITAL SOLUTIONS. TODOS LOS DERECHOS RESERVADOS.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Observador para animaciones al hacer scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
