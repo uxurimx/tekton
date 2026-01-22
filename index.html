@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEKTON | Arquitectura Digital</title>
     
+    <link rel="icon" href="logo.png" type="image/png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,8 +14,8 @@
     <style>
         /* --- VARIABLES & RESET --- */
         :root {
-            --bg-color: #F0F0F0; /* Gris Concreto Claro */
-            --text-color: #111111; /* Negro Carbón */
+            --bg-color: #F0F0F0; 
+            --text-color: #111111; 
             --accent-color: #222222;
             --grid-line: #DCDCDC;
             --font-head: 'Space Grotesk', sans-serif;
@@ -33,7 +35,6 @@
             font-family: var(--font-body);
             line-height: 1.6;
             overflow-x: hidden;
-            /* Patrón de cuadrícula tipo plano arquitectónico */
             background-image: 
                 linear-gradient(var(--grid-line) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
@@ -76,12 +77,12 @@
 
         /* --- HEADER --- */
         header {
-            padding: 20px 0;
+            padding: 15px 0; /* Ajustado ligeramente para el logo */
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 100;
-            background: rgba(240, 240, 240, 0.9);
+            background: rgba(240, 240, 240, 0.95);
             backdrop-filter: blur(5px);
             border-bottom: var(--border-style);
         }
@@ -92,12 +93,16 @@
             align-items: center;
         }
 
+        /* LOGO MODIFICADO PARA IMAGEN */
         .logo {
-            font-family: var(--font-head);
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 35px; /* Altura controlada para el nav */
+            width: auto;
+            display: block;
         }
 
         .nav-links {
@@ -122,7 +127,7 @@
 
         .hero-content h1 {
             font-family: var(--font-head);
-            font-size: clamp(3rem, 8vw, 6rem); /* Responsive typography */
+            font-size: clamp(3rem, 8vw, 6rem);
             line-height: 0.95;
             text-transform: uppercase;
             margin-bottom: 30px;
@@ -176,7 +181,7 @@
         .comp-col.left ul li::before { content: "✕"; position: absolute; left: 0; color: red; }
         .comp-col.right ul li::before { content: "✓"; position: absolute; left: 0; color: var(--text-color); font-weight: bold;}
 
-        /* --- SERVICIOS (NIVELES) --- */
+        /* --- SERVICIOS --- */
         .servicios {
             padding: 100px 0;
         }
@@ -277,7 +282,7 @@
             text-transform: uppercase;
         }
 
-        /* --- ANIMACIONES SENCILLAS --- */
+        /* --- ANIMACIONES --- */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -288,10 +293,9 @@
             transform: translateY(0);
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .comparison-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; } /* Simplificado para el ejemplo */
+            .nav-links { display: none; }
         }
     </style>
 </head>
@@ -300,7 +304,9 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">Tekton.</div>
+                <div class="logo">
+                    <img src="logo.png" alt="Tekton Logo">
+                </div>
                 <div class="nav-links">
                     <a href="#manifiesto">Realidad</a>
                     <a href="#servicios">Arquitectura</a>
@@ -315,7 +321,7 @@
             <div class="hero-content fade-in">
                 <h1>No construyas<br>tu imperio en<br>terreno rentado.</h1>
                 <p>Las redes sociales no son tu negocio. Son el volante que repartes en la calle. Tekton diseña y escritura tu verdadero espacio digital.</p>
-                <a href="#contacto" class="btn">Reclamar mi terreno</a>
+                <a href="https://wa.me/526613386653?text=Hola%20Tekton,%20quiero%20reclamar%20mi%20terreno%20digital." class="btn" target="_blank">Reclamar mi terreno</a>
             </div>
         </div>
     </section>
@@ -396,7 +402,7 @@
             <p style="max-width: 600px; margin: 0 auto 30px auto; font-weight: 300;">
                 Deja de jugar a la casita en redes sociales. Comencemos a construir tu edificio hoy mismo.
             </p>
-            <a href="mailto:hola@tekton.com" class="btn">Iniciar Proyecto</a>
+            <a href="https://wa.me/526613386653?text=Hola%20Tekton,%20quiero%20iniciar%20mi%20proyecto." class="btn" target="_blank">Iniciar Proyecto</a>
         </div>
     </section>
 
@@ -407,7 +413,6 @@
     </footer>
 
     <script>
-        // Observador para animaciones al hacer scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -420,7 +425,6 @@
             observer.observe(el);
         });
 
-        // Smooth Scroll para links internos
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
